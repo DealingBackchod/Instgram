@@ -1,76 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Instagram Profile Viewer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fake Instagram</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background: #fafafa;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #dbdbdb;
+      padding: 10px 15px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      padding: 40px;
+      position: sticky;
+      top: 0;
     }
-    input, button {
+    header h1 {
+      font-family: 'Billabong', cursive;
+      font-size: 30px;
+      margin: 0;
+    }
+    header input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .feed {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 10px;
+    }
+    .post {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
       padding: 10px;
-      font-size: 16px;
-      margin: 5px;
     }
-    .profile {
-      margin-top: 30px;
-      text-align: center;
-    }
-    img {
+    .post-header img {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      width: 120px;
-      height: 120px;
+      margin-right: 10px;
+    }
+    .post-img {
+      width: 100%;
+      height: auto;
+    }
+    .post-body {
+      padding: 10px;
+    }
+    .icons {
+      display: flex;
+      gap: 10px;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .icons span {
+      cursor: pointer;
+    }
+    .caption {
+      font-size: 14px;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #dbdbdb;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
     }
   </style>
 </head>
 <body>
-  <h2>Instagram Profile Viewer</h2>
-  <input id="username" placeholder="Enter Instagram username" />
-  <button onclick="getProfile()">Get Profile</button>
 
-  <div class="profile" id="profile"></div>
+  <header>
+    <h1>Instagram</h1>
+    <input type="text" placeholder="Search" />
+  </header>
 
-  <script>
-    async function getProfile() {
-      const username = document.getElementById("username").value;
-      const resultDiv = document.getElementById("profile");
-      resultDiv.innerHTML = "Loading...";
+  <div class="feed">
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/150?img=5" alt="user" />
+        <strong>johndoe</strong>
+      </div>
+      <img src="https://picsum.photos/id/237/500/300" class="post-img" />
+      <div class="post-body">
+        <div class="icons">
+          <span>❤️</span>
+          <span>💬</span>
+          <span>📤</span>
+        </div>
+        <div class="caption">
+          <strong>johndoe</strong> Enjoying the sunny day ☀️ #vacation #chill
+        </div>
+      </div>
+    </div>
 
-      try {
-        const response = await fetch(`https://instagram-profile1.p.rapidapi.com/getprofile/${username}`, {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key': 'b2c0a5c0-54bc-11f0-bcce-b765c958cefc',
-            'X-RapidAPI-Host': 'instagram-profile1.p.rapidapi.com'
-          }
-        });
+    <!-- Duplicate more .post sections to simulate a feed -->
+    <div class="post">
+      <div class="post-header">
+        <img src="https://i.pravatar.cc/150?img=12" alt="user" />
+        <strong>alice_w</strong>
+      </div>
+      <img src="https://picsum.photos/id/1005/500/300" class="post-img" />
+      <div class="post-body">
+        <div class="icons">
+          <span>❤️</span>
+          <span>💬</span>
+          <span>📤</span>
+        </div>
+        <div class="caption">
+          <strong>alice_w</strong> Coffee time! ☕️ #morningvibes
+        </div>
+      </div>
+    </div>
 
-        if (!response.ok) {
-          resultDiv.innerHTML = "User not found or API error.";
-          return;
-        }
+  </div>
 
-        const data = await response.json();
-        const user = data.profile;
+  <footer>
+    <span>🏠</span>
+    <span>🔍</span>
+    <span>➕</span>
+    <span>❤️</span>
+    <span>👤</span>
+  </footer>
 
-        resultDiv.innerHTML = `
-          <img src="${user.profilePicUrl}" alt="Profile Pic" />
-          <h3>${user.fullName}</h3>
-          <p>@${user.username}</p>
-          <p>Followers: ${user.followerCount.toLocaleString()}</p>
-          <p>Following: ${user.followingCount.toLocaleString()}</p>
-          <p>Posts: ${user.postCount}</p>
-          <p>${user.biography}</p>
-        `;
-      } catch (error) {
-        resultDiv.innerHTML = "Something went wrong. Try again.";
-      }
-    }
-  </script>
 </body>
 </html>
